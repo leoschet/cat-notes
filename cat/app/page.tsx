@@ -2,6 +2,7 @@
 
 import { Flex } from '@radix-ui/themes';
 import { useState } from 'react';
+import DarkModeSwitch from "./_components/DarkModeSwitch";
 import { ItemInfo, Menu, Sidebar } from "./_components/Sidebar";
 
 export default function Home() {
@@ -34,6 +35,12 @@ export default function Home() {
         <main>
             <Flex id={appPortalId} style={{ position: "absolute" }} />
             <Sidebar>
+                <Flex
+                    className="MenuHeader"
+                    style={{ justifyContent: "right", marginBottom: "1em" }}
+                >
+                    <DarkModeSwitch size="1" mode="dark" />
+                </Flex>
                 <Menu
                     title="Pages"
                     includeAddButton={true}

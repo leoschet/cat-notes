@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      <Theme accentColor="gold" grayColor="sand" panelBackground="solid" appearance="dark">
+      <Theme accentColor="gold" grayColor="sand" panelBackground="solid">
         {children}
         <ThemePanel />
       </Theme>

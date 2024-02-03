@@ -1,0 +1,3 @@
+.rt-SwitchRoot:where(.rt-r-size-1) {
+    --switch-height: var(--space-3);
+}
