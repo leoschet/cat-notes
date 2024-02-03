@@ -1,18 +1,38 @@
-import { Flex, Responsive, Switch } from '@radix-ui/themes';
+"use client"
+
+import { Flex, Responsive, Switch } from "@radix-ui/themes";
+import { useTheme } from "next-themes";
+import Image from "next/image";
+import { useState, useEffect } from 'react';
 import { IoMoon, IoSunny } from "react-icons/io5";
 import "./switch.css";
 
 interface DarkModeSwitchProps {
     size?: Responsive<"1" | "2" | "3">;
-    mode?: "light" | "dark";
 }
 
-const DarkModeSwitch = ({ size, mode }: DarkModeSwitchProps) => {
-    // This isn't working with Next.js.
-    // useEffect is also not desirable, as the user would see the wrong theme upon loading.
-    // if (mode === "dark" && !document.body.classList.contains("dark")) {
-    //     document.body.classList.add("dark");
-    // }
+const DarkModeSwitch = ({ size }: DarkModeSwitchProps) => {
+
+    const [mounted, setMounted] = useState(false)
+    const { setTheme, resolvedTheme } = useTheme()
+
+    // This indicates the component is mounted in the client.
+    // Without this logic, we cannot retrieve the correct `resolvedTheme` in the client.
+    useEffect(() => setMounted(true), [])
+
+    // This is returned during the initial rendering in the server.
+    if (!mounted) return (
+        <Image
+            priority={false}
+            // Transparent png https://png-pixel.com
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADkAAAAMCAQAAABypt0QAAAAGUlEQVR42mNkoDtgHLVy1MpRK0etHClWAgAobgAN+0DbgwAAAABJRU5ErkJggg=="
+            alt="Loading Light/Dark Toggle"
+            title="Loading Light/Dark Toggle"
+            width={57}
+            height={12}
+            sizes="57x12"
+        />
+    )
 
     return (
         <Flex style={{ alignItems: "center", justifyContent: "space-evenly" }}>
@@ -21,11 +41,11 @@ const DarkModeSwitch = ({ size, mode }: DarkModeSwitchProps) => {
                 size={size}
                 variant="soft"
                 style={{ margin: "0 0.5em" }}
-                // defaultChecked={mode === "dark"}
+                defaultChecked={resolvedTheme === "dark"}
                 onClick={() => {
-                    document.body.classList.contains("dark") ?
-                        document.body.classList.remove("dark") :
-                        document.body.classList.add("dark");
+                    resolvedTheme === "dark" ?
+                        setTheme("light") :
+                        setTheme("dark");
                 }
                 }
             />
