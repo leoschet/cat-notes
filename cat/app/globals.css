@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Style typography
+https://github.com/codex-team/editor.js/discussions/1910#discussioncomment-7731604
+*/
+/* How to use radix colors with tailwind
+https://fynn.at/shorts/2023-03-19-how-to-use-radix-colors-with-tailwind-css 
+*/
+.ce-block__content{
+    @apply prose;
+}
