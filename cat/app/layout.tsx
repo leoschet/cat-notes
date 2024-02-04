@@ -28,7 +28,7 @@ export default function RootLayout({
                         <Flex id={appPortalId} style={{ position: "absolute" }} />
                         <Navbar appPortalId={appPortalId} />
                         {children}
-                        {/* <ThemePanel /> */}
+                        <ThemePanel />
                     </Theme>
                 </Provider>
             </body>
