@@ -1,0 +1,79 @@
+/* .codex-editor__redactor > div, .ce-toolvar > div {
+    background-color: var(--color-panel);
+    color: var(--gray-11);
+} */
+
+/* Override styling of selected blocks */
+.ce-block--selected .ce-block__content {
+    background-color: var(--accent-4);
+}
+
+/* Make the toolbar buttons square */
+.ce-inline-toolbar__buttons > button {
+    margin: 6px 1px;
+    padding: 0;
+}
+
+/* Only change these colors in mobile, as its set by default */
+@media only screen and (max-width: 500px) {
+    .ce-toolbar__actions > * {
+        background-color: var(--color-panel);
+        border-color: var(--gray-3);
+    }
+}
+
+/* Style tools' menus' wrappers */
+.ce-popover,
+.ce-popover__search,
+.ce-inline-toolbar,
+.ce-conversion-toolbar {
+    background-color: var(--color-panel);
+    color: var(--gray-11);
+    border-color: transparent;
+    border-radius: var(--radius-4);
+}
+
+/* Style tools' menus' items */
+.ce-toolbar__actions > *,
+.ce-inline-toolbar__dropdown,
+.ce-inline-toolbar__buttons > button,
+.ce-popover-item,
+.ce-popover-item > *,
+.ce-conversion-tool {
+    color: var(--gray-9);
+    border-color: transparent;
+    border-radius: var(--radius-4);
+    --color-border-icon: var(--gray-5);
+}
+
+.ce-toolbar__actions > *:hover,
+.ce-inline-toolbar__dropdown:hover,
+.ce-inline-toolbar__buttons > button:hover,
+.ce-popover-item:hover:not(.ce-popover-item--no-hover):hover,
+.ce-popover-item:hover:not(.ce-popover-item--no-hover):hover > *,
+.ce-conversion-tool:hover {
+    color: var(--accent-9);
+    background-color: var(--gray-3);
+}
+
+.ce-conversion-tool {
+    margin: 0.1em 0.5em;
+}
+
+/* Style tools' icons */
+.ce-popover-item__icon,
+.ce-conversion-tool__icon {
+    background-color: var(--gray-3);   
+}
+
+/* Style active/selected options */
+.ce-popover-item--active,
+.ce-popover-item--active > *,
+.ce-conversion-tool--focused,
+.ce-conversion-tool--focused > * {
+    color: var(--accent-9);
+    background-color: var(--gray-3);
+    background: var(--gray-3) !important;
+    font-weight: 700;
+    box-shadow: none;
+}
