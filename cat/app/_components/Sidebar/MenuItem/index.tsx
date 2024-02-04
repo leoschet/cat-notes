@@ -1,72 +1,16 @@
 "use client"
 
-import * as Accordion from '@radix-ui/react-accordion';
-import { Box, Flex, Text, TextFieldInput, TextFieldRoot } from '@radix-ui/themes';
-import classNames from 'classnames';
-import React, { ReactElement, ReactNode, Ref, useEffect, useRef, useState } from 'react';
-import { IoAddOutline, IoChevronForward, IoEllipsisHorizontal } from "react-icons/io5";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useCallback } from "react";
+
+import { AccordionItem } from '@radix-ui/react-accordion';
+import { Box, Text, TextFieldInput, TextFieldRoot } from '@radix-ui/themes';
+import { ReactElement, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import OutsideClickAlerter from '../OutsideClickAlerter';
-import Icon from './Icon';
-import "./sidebar.css";
-
-interface AccordionProps {
-    children?: ReactNode;
-    className?: string;
-}
-
-interface AccordionHeaderProps extends AccordionProps {
-    triggerOpenClose: () => void;
-    onAddClick?: () => void;
-}
-
-const AccordionHeader = React.forwardRef(({ children, className, triggerOpenClose, onAddClick, ...props }: AccordionHeaderProps, forwardedRef) => {
-    const [showOptions, setShowOptions] = useState<boolean>(false);
-
-    return (
-        <Accordion.Header
-            className="AccordionHeader"
-            aria-orientation="horizontal"
-            onMouseEnter={() => setShowOptions(true)}
-            onMouseLeave={() => setShowOptions(false)}
-        >
-            <Flex className="HeaderContent">
-                <Box className="HoverBox Square">
-                    <Accordion.Trigger
-                        className={classNames('AccordionTrigger', className)}
-                        {...props}
-                        // ref={forwardedRef as Ref<HTMLButtonElement>}
-                        onClick={triggerOpenClose}
-                    >
-                        <IoChevronForward className="AccordionChevron" aria-hidden />
-                    </Accordion.Trigger>
-                </Box>
-                {children}
-            </Flex>
-            {showOptions && (
-                <Flex className="HeaderContent">
-                    <Box className="HoverBox Square">
-                        <IoEllipsisHorizontal size={12} />
-                    </Box>
-                    <Box className="HoverBox Square">
-                        <IoAddOutline size={12} onClick={onAddClick} />
-                    </Box>
-                </Flex>
-            )}
-        </Accordion.Header>
-    )
-});
-
-const AccordionContent = React.forwardRef(({ children, className, ...props }: AccordionProps, forwardedRef) => (
-    <Accordion.Content
-        className={classNames('AccordionContent', className)}
-        {...props}
-        ref={forwardedRef as Ref<HTMLDivElement>}
-    >
-        {children || <Text className="AccordionContentText">No pages inside</Text>}
-        {/* <div className="AccordionContentText">{children || "No pages inside"}</div> */}
-    </Accordion.Content>
-));
+import { AccordionHeader, AccordionContent } from './Accordion';
+import OutsideClickAlerter from '../../OutsideClickAlerter';
+import Icon from '../Icon';
+import "../sidebar.css";
 
 export interface ItemInfo {
     id: string;
@@ -87,7 +31,7 @@ export interface MenuItemProps {
     children?: ReactElement<MenuItemProps> | Array<ReactElement<MenuItemProps>>;
 }
 
-export const MenuItem = ({
+export default function MenuItem ({
     appPortalId,
     parentsIdBreadCrumbs,
     toggleItem,
@@ -97,7 +41,7 @@ export const MenuItem = ({
     text,
     emoji,
     children,
-}: MenuItemProps) => {
+}: MenuItemProps) {
     const [itemText, setItemText] = useState<string | undefined>(text);
     const [inputItemText, setInputItemText] = useState<string>("Untitled");
     const [emojiCode, _setEmojiCode] = useState<string | undefined>(emoji);
@@ -120,6 +64,18 @@ export const MenuItem = ({
 
     const menuItemId = id || uuidv4();
 
+    const searchParams = useSearchParams();
+    const router = useRouter()
+
+    const navigateToSelf = useCallback(
+        () => {
+            const params = new URLSearchParams(searchParams);
+            params.set("id", menuItemId);
+            router.push(`/?${params.toString()}`)
+        },
+        [menuItemId]
+    );
+
     const createSubMenuItem = () => {
         // Create new empty sub item
         upsertItem(
@@ -136,7 +92,7 @@ export const MenuItem = ({
 
         const item = { id: menuItemId, title: inputItemRef.current, emoji: emojiCodeRef.current };
         upsertItem(item, parentsIdBreadCrumbs);
-        setOpenPageInfo?.(item);
+        navigateToSelf();
     }
 
     const setEmojiCode = (newEmojiCode: string) => {
@@ -147,7 +103,7 @@ export const MenuItem = ({
     }
 
     return (
-        <Accordion.Item key={menuItemId} value={menuItemId}>
+        <AccordionItem key={menuItemId} value={menuItemId}>
             <AccordionHeader
                 onAddClick={createSubMenuItem}
                 triggerOpenClose={() => toggleItem(menuItemId)}
@@ -161,11 +117,7 @@ export const MenuItem = ({
                     />
                 </Box>
                 {itemText ?
-                    (<Text onClick={() => setOpenPageInfo?.({
-                        id: menuItemId,
-                        title: itemText,
-                        emoji: emojiCode
-                    })}>
+                    (<Text onClick={navigateToSelf}>
                         {itemText}
                     </Text>) : (
                         <OutsideClickAlerter onOutsideClick={tryFinishMenuItemCreation}>
@@ -186,6 +138,6 @@ export const MenuItem = ({
             <AccordionContent>
                 {children}
             </AccordionContent>
-        </Accordion.Item>
+        </AccordionItem>
     )
 }

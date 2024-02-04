@@ -3,12 +3,14 @@
 import { Root as AccordionRoot } from '@radix-ui/react-accordion';
 import { Box, Flex, Text } from '@radix-ui/themes';
 import { cloneDeep } from "lodash-es";
+import dynamic from 'next/dynamic';
 import { useEffect, useRef, useState } from 'react';
 import { IoAddOutline } from "react-icons/io5";
 import { v4 as uuidv4 } from 'uuid';
-import { ItemInfo, MenuItem } from './MenuItem';
+import { ItemInfo } from './MenuItem';
 import "./sidebar.css";
 
+const MenuItem = dynamic(() => import("./MenuItem"));
 
 export interface MenuProps {
     title: string;
@@ -27,10 +29,13 @@ export const Menu = ({
     saveItems,
     setOpenPageInfo
 }: MenuProps) => {
+    const [mounted, setMounted] = useState(false);
     const [items, setItems] = useState<ItemInfo[]>(menuItems || []);
     const [openItems, setOpenItems] = useState<string[]>([]);
 
     const itemsRef = useRef<ItemInfo[]>(items);
+
+    useEffect(() => setMounted(true), [])
 
     useEffect(() => {
         itemsRef.current = items
@@ -110,7 +115,6 @@ export const Menu = ({
         })
     }
 
-    const renderedItems = renderItems(itemsRef.current)
     return (
         <AccordionRoot
             className="AccordionRoot"
@@ -136,7 +140,8 @@ export const Menu = ({
                     </Flex>)
                 }
             </Flex>
-            {renderedItems}
+            {/* TODO: Mount things in parts, so it loads faster? Or add a loader */}
+            {mounted && renderItems(itemsRef.current)}
         </AccordionRoot>
     )
 }
