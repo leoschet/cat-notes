@@ -24,7 +24,7 @@ export default function RootLayout({
         <html lang="en">
             <body className={inter.className} suppressHydrationWarning>
                 <Provider>
-                    <Theme accentColor="gold" grayColor="sand" panelBackground="solid">
+                    <Theme accentColor="gold" grayColor="sand" panelBackground="solid" radius="small">
                         <Flex id={appPortalId} style={{ position: "absolute" }} />
                         <Navbar appPortalId={appPortalId} />
                         {children}

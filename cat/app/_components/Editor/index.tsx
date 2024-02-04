@@ -72,6 +72,9 @@ export default function Editor({
                     Loading...
                 </Heading>
             </div>}
-        {children || <div id={id} style={{ width: "100%", textAlign: "left", padding: "1em" }} />}
+        {children || <div
+            id={id}
+            style={{ width: "100%", textAlign: "left", padding: "1em" }}
+        />}
     </>
 };
