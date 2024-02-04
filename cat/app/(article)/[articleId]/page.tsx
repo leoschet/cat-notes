@@ -20,6 +20,8 @@ interface ArticlePageProps {
 
 export default function ArticlePage({ params }: ArticlePageProps) {
     // App memory to fake data persistence
+    // NOTE: Currently the persistency doesn't work because the component is
+    // rerendered whenever the route changes
     const [pagesBlocks, setPagesBlocks] = useState<PagesBlocks>({})
 
     const pagesBlocksRef = useRef<PagesBlocks>(pagesBlocks)
