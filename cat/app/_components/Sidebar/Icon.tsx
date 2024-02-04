@@ -1,11 +1,16 @@
 "use client"
 
 import { Flex } from '@radix-ui/themes';
-import EmojiPicker, { Emoji, EmojiClickData } from 'emoji-picker-react';
+import { Emoji, EmojiClickData } from 'emoji-picker-react';
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { IoDocumentOutline, IoDocumentTextOutline } from "react-icons/io5";
-import OutsideClickAlerter from '../OutsideClickAlerter';
+
+
+const IoDocumentOutline = dynamic(() => import('react-icons/io5').then(mod => mod.IoDocumentOutline));
+const IoDocumentTextOutline = dynamic(() => import('react-icons/io5').then(mod => mod.IoDocumentTextOutline));
+const EmojiPicker = dynamic(() => import('emoji-picker-react'));
+const OutsideClickAlerter = dynamic(() => import('../OutsideClickAlerter'));
 
 interface Props {
     emojiPickerPortalId: string;
