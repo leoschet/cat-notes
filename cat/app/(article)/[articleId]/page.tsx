@@ -15,7 +15,7 @@ interface PagesBlocks {
 }
 
 interface ArticlePageProps {
-    params: { params: { articleId: string } }
+    params: { articleId: string }
 }
 
 export default function ArticlePage({ params }: ArticlePageProps) {
