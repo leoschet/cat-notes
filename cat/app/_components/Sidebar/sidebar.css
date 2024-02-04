@@ -7,23 +7,23 @@ input {
 }
 
 .PageNameInputRoot > * {
-  width: 100%;
-  font-size: 12px;
-  color: var(--gray-9);
-  border: none;
-  outline: none;
-  border-bottom: 1px solid var(--gray-9);
-  background-color: transparent;
-  border-radius: 0;
-  height: auto;
-  text-align: left;
-  text-indent: calc(var(--space-0) - var(--text-field-border-width));
+  width: 100% !important;
+  font-size: 12px !important;
+  color: var(--gray-9) !important;
+  border: none !important;
+  outline: none !important;
+  border-bottom: 1px solid var(--gray-9) !important;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  height: auto !important;
+  text-align: left !important;
+  text-indent: calc(var(--space-0) - var(--text-field-border-width)) !important;
 }
 
 .PageNameInputRoot > *:focus {
-  color: var(--accent-11);
-  border-bottom: 1px solid var(--accent-11);
-  outline: none;
+  color: var(--accent-11) !important;
+  border-bottom: 1px solid var(--accent-11) !important;
+  outline: none !important;
 }
 
 /* Defines main position and height */
@@ -51,7 +51,7 @@ input {
 
 .MenuHeader {
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between !important;
   color: var(--gray-8);
   width: auto;
   padding: 0em 1em;
