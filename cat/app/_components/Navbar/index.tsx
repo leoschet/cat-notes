@@ -37,7 +37,7 @@ export default function Navbar({ appPortalId }: NavbarProps) {
         // const params = new URLSearchParams(searchParams);
         // params.set("id", item.id);
         // router.push(`/?${params.toString()}`)
-        router.push(`/${item.id}`)
+        router.push(`/article/${item.id}`)
     }
     // ------------------------------
 
