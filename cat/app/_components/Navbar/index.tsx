@@ -47,7 +47,7 @@ export default function Navbar({ appPortalId }: NavbarProps) {
         <Sidebar>
             <Flex
                 className="MenuHeader"
-                style={{ justifyContent: "right", marginBottom: "1em" }}
+                style={{ justifyContent: "right !important", marginBottom: "1em" }}
             >
                 <DarkModeSwitch size="1" />
             </Flex>

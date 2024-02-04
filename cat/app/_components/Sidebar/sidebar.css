@@ -6,6 +6,11 @@ input {
   width: auto;
 }
 
+/* NOTE: Forcing styles with important seems hacky and there should be a better way.
+Perhaps defining utility tailwind classes, or adapting the style to accomodate tailwind.
+
+It seems though that the problematic css classes come from radix, as they have the `rt` prefix.
+*/
 .PageNameInputRoot > * {
   width: 100% !important;
   font-size: 12px !important;
