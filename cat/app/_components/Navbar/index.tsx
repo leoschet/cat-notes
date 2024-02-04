@@ -34,9 +34,10 @@ export default function Navbar({ appPortalId }: NavbarProps) {
     const router = useRouter()
 
     const navigateToMenuItem = (item: ItemInfo) => {
-        const params = new URLSearchParams(searchParams);
-        params.set("id", item.id);
-        router.push(`/?${params.toString()}`)
+        // const params = new URLSearchParams(searchParams);
+        // params.set("id", item.id);
+        // router.push(`/?${params.toString()}`)
+        router.push(`/${item.id}`)
     }
     // ------------------------------
 
