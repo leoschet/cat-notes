@@ -18,7 +18,7 @@ export interface MenuProps {
     includeAddButton?: boolean;
     menuItems?: ItemInfo[];
     saveItems?: (items: ItemInfo[]) => void;
-    setOpenPageInfo?: (item: ItemInfo) => void;
+    navigateToMenuItem?: (item: ItemInfo) => void;
 }
 
 export const Menu = ({
@@ -27,7 +27,7 @@ export const Menu = ({
     includeAddButton,
     menuItems,
     saveItems,
-    setOpenPageInfo
+    navigateToMenuItem
 }: MenuProps) => {
     const [mounted, setMounted] = useState(false);
     const [items, setItems] = useState<ItemInfo[]>(menuItems || []);
@@ -101,7 +101,7 @@ export const Menu = ({
                 parentsIdBreadCrumbs,
                 toggleItem,
                 upsertItem,
-                setOpenPageInfo,
+                navigateToMenuItem,
                 id: item.id,
                 text: item.title,
                 emoji: item.emoji,

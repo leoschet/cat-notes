@@ -1,16 +1,15 @@
 "use client"
 
-import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 
 import { AccordionItem } from '@radix-ui/react-accordion';
 import { Box, Text, TextFieldInput, TextFieldRoot } from '@radix-ui/themes';
 import { ReactElement, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { AccordionHeader, AccordionContent } from './Accordion';
 import OutsideClickAlerter from '../../OutsideClickAlerter';
 import Icon from '../Icon';
 import "../sidebar.css";
+import { AccordionContent, AccordionHeader } from './Accordion';
 
 export interface ItemInfo {
     id: string;
@@ -24,19 +23,19 @@ export interface MenuItemProps {
     parentsIdBreadCrumbs: string[];
     toggleItem: (id: string, forceOpen?: boolean) => void;
     upsertItem: (item: ItemInfo, idBreadCrumbs: string[]) => void;
-    setOpenPageInfo?: (item: ItemInfo) => void;
+    navigateToMenuItem?: (item: ItemInfo) => void;
     id?: string;
     text?: string;
     emoji?: string;
     children?: ReactElement<MenuItemProps> | Array<ReactElement<MenuItemProps>>;
 }
 
-export default function MenuItem ({
+export default function MenuItem({
     appPortalId,
     parentsIdBreadCrumbs,
     toggleItem,
     upsertItem,
-    setOpenPageInfo,
+    navigateToMenuItem,
     id,
     text,
     emoji,
@@ -64,17 +63,9 @@ export default function MenuItem ({
 
     const menuItemId = id || uuidv4();
 
-    const searchParams = useSearchParams();
-    const router = useRouter()
-
-    const navigateToSelf = useCallback(
-        () => {
-            const params = new URLSearchParams(searchParams);
-            params.set("id", menuItemId);
-            router.push(`/?${params.toString()}`)
-        },
-        [menuItemId]
-    );
+    const navigateToSelf = useCallback(() => {
+        navigateToMenuItem?.({ id: menuItemId, title: itemText, emoji: emojiCode });
+    }, [menuItemId, itemText, emojiCode, navigateToMenuItem])
 
     const createSubMenuItem = () => {
         // Create new empty sub item
