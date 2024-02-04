@@ -58,7 +58,7 @@ export default function Editor({
         }
 
         return () => {
-            editorJS.current?.save()
+            editorJS.current?.saver.save()
                 .then((outputData: OutputData) => save?.(id, outputData))
 
             editorJS.current?.destroy()
